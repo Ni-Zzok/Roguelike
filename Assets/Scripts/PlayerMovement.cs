@@ -9,8 +9,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 moveDirection;
 
-
     public Animator animator;
+
+    private bool facingRight = true;
 
     void Start()
     {
@@ -59,6 +60,17 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = new Vector2(moveX, moveY).normalized;
 
         animator.SetFloat("horizontalMove", Mathf.Abs(moveX));
+        animator.SetFloat("verticalMove", moveY);
+
+        if (moveX < 0 && facingRight)
+        {
+            Flip();
+        }
+
+        if (moveX > 0 && !facingRight)
+        {
+            Flip();
+        }
     }
 
     void Move()
@@ -67,5 +79,14 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = moveDirection * moveSpeed;
         }
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 }
