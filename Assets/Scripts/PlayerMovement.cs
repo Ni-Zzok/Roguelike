@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 moveDirection;
 
+
+    public Animator animator;
+
     void Start()
     {
         // Автоматическое присвоение компонента Rigidbody2D
@@ -39,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         ProcessInputs();
+
+
     }
 
     void FixedUpdate()
@@ -52,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical");
 
         moveDirection = new Vector2(moveX, moveY).normalized;
+
+        animator.SetFloat("horizontalMove", Mathf.Abs(moveX));
     }
 
     void Move()
