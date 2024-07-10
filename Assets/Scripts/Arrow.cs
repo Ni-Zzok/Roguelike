@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    // Этот метод вызывается при столкновении объекта с другим коллайдером
-    private void OnCollisionEnter(Collision collision)
+    public int damage;  // Урон, который наносит стрела
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Проверяем, столкнулась ли стрела с объектом, который мы хотим обрабатывать
-        if (collision.gameObject.CompareTag("Target"))
+        // Проверяем, попали ли мы во врага
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Уничтожаем стрелу
+            // Получаем компонент Enemy у объекта, в который попали
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+
+            // Если компонент Enemy найден, наносим урон
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+
+            // Уничтожаем стрелу после попадания
             Destroy(gameObject);
         }
     }
