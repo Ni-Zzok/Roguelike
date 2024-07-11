@@ -23,5 +23,17 @@ public class Arrow : MonoBehaviour
             // Уничтожаем стрелу после попадания
             Destroy(gameObject);
         }
+
+        // Проверяем, попали ли мы в стену
+        else if (collision.gameObject.CompareTag("Block"))
+        {
+            // Уничтожаем стрелу после попадания в стену
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Door"))
+        {
+            // Уничтожаем стрелу после попадания в стену
+            Destroy(gameObject);
+        }
     }
 }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine;
+
 public class Shooting : MonoBehaviour
 {
     public Transform firePointUp;
@@ -23,29 +25,28 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             currentFirePoint = firePointUp;
             currentDirection = Vector2.up;
+            Shoot(currentFirePoint, currentDirection);
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             currentFirePoint = firePointDown;
             currentDirection = Vector2.down;
+            Shoot(currentFirePoint, currentDirection);
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             currentFirePoint = firePointLeft;
             currentDirection = Vector2.left;
+            Shoot(currentFirePoint, currentDirection);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             currentFirePoint = firePointRight;
             currentDirection = Vector2.right;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
             Shoot(currentFirePoint, currentDirection);
         }
     }
