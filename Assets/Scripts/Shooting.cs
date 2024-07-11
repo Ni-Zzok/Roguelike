@@ -16,11 +16,15 @@ public class Shooting : MonoBehaviour
     private Transform currentFirePoint;
     private Vector2 currentDirection;
 
+    public Animator animator;
+
     private void Start()
     {
         // Устанавливаем начальное направление и firePoint
         currentFirePoint = firePointRight;
         currentDirection = Vector2.right;
+
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -61,5 +65,8 @@ public class Shooting : MonoBehaviour
 
         // Применяем силу к стреле
         rb.AddForce(direction * arrowForce, ForceMode2D.Impulse);
+
+        // Вызываем анимацию стрельбы
+        animator.SetTrigger("Shoot");
     }
 }

@@ -18,26 +18,26 @@ public class PlayerMovement : MonoBehaviour
         // Автоматическое присвоение компонента Rigidbody2D
         rb = GetComponent<Rigidbody2D>();
 
-        // Проверка наличия Rigidbody2D
-        if (rb == null)
-        {
-            Debug.LogError("Rigidbody2D not found on the player!");
-        }
-        else
-        {
-            Debug.Log("Rigidbody2D successfully assigned.");
-        }
+        //// Проверка наличия Rigidbody2D
+        //if (rb == null)
+        //{
+        //    Debug.LogError("Rigidbody2D not found on the player!");
+        //}
+        //else
+        //{
+        //    Debug.Log("Rigidbody2D successfully assigned.");
+        //}
 
-        // Проверка наличия Collider2D
-        Collider2D col = GetComponent<Collider2D>();
-        if (col == null)
-        {
-            Debug.LogError("Collider2D not found on the player!");
-        }
-        else
-        {
-            Debug.Log("Collider2D successfully assigned.");
-        }
+        //// Проверка наличия Collider2D
+        //Collider2D col = GetComponent<Collider2D>();
+        //if (col == null)
+        //{
+        //    Debug.LogError("Collider2D not found on the player!");
+        //}
+        //else
+        //{
+        //    Debug.Log("Collider2D successfully assigned.");
+        //}
     }
 
     void Update()
