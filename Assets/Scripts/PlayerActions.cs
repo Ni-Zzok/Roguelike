@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine;
-
 public class Shooting : MonoBehaviour
 {
     public Transform firePointUp;
@@ -18,8 +16,17 @@ public class Shooting : MonoBehaviour
 
     public Animator animator;
 
+    public float moveSpeed = 10f;
+    private Rigidbody2D rb; // измените public на private
+
+    private Vector2 moveDirection;
+
+    private bool facingRight = true;
+
+
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         // Устанавливаем начальное направление и firePoint
         currentFirePoint = firePointRight;
         currentDirection = Vector2.right;
@@ -29,6 +36,8 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
+        ProcessInputs();
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             currentFirePoint = firePointUp;
@@ -45,14 +54,59 @@ public class Shooting : MonoBehaviour
         {
             currentFirePoint = firePointLeft;
             currentDirection = Vector2.left;
+            if (facingRight) { Flip(); }
             Shoot(currentFirePoint, currentDirection);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             currentFirePoint = firePointRight;
             currentDirection = Vector2.right;
+            if (!facingRight) { Flip(); }
             Shoot(currentFirePoint, currentDirection);
         }
+    }
+
+    void FixedUpdate()
+    {
+        Move();
+    }
+
+    void ProcessInputs()
+    {
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+
+        moveDirection = new Vector2(moveX, moveY).normalized;
+
+        animator.SetFloat("horizontalMove", Mathf.Abs(moveX));
+        animator.SetFloat("verticalMove", moveY);
+
+        if (moveX < 0 && facingRight)
+        {
+            Flip();
+        }
+
+        if (moveX > 0 && !facingRight)
+        {
+            Flip();
+        }
+    }
+
+    void Move()
+    {
+        if (rb != null)
+        {
+            rb.velocity = moveDirection * moveSpeed;
+        }
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
     void Shoot(Transform firePoint, Vector2 direction)
@@ -68,5 +122,6 @@ public class Shooting : MonoBehaviour
 
         // Вызываем анимацию стрельбы
         animator.SetTrigger("Shoot");
+
     }
 }
