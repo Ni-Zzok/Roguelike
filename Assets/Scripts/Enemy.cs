@@ -57,10 +57,11 @@ public class Enemy : MonoBehaviour
         // Проверяем, столкнулся ли враг с игроком
         if (collision.gameObject.CompareTag("Player") && !isAttacking)
         {
-            // Начинаем атаку по контакту
-            StartCoroutine(DealDamageOverTime(collision.gameObject.GetComponent<Player>()));
+            Health playerHealth = player.GetComponent<Health>();
+            StartCoroutine(DealDamageOverTime(playerHealth));
         }
     }
+
 
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -68,22 +69,24 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             // Прекращаем атаку
-            StopCoroutine(DealDamageOverTime(collision.gameObject.GetComponent<Player>()));
+            Health playerHealth = player.GetComponent<Health>();
+            StopCoroutine(DealDamageOverTime(playerHealth));
             isAttacking = false;
         }
     }
 
-    private IEnumerator DealDamageOverTime(Player player)
+    private IEnumerator DealDamageOverTime(Health health)
     {
         isAttacking = true; // Устанавливаем флаг атаки
 
         while (isAttacking)
         {
-            if (player != null)
+            if (health != null)
             {
-                player.TakeDamage(damage); // Наносим урон игроку
+                health.TakeHit(damage); // Наносим урон игроку
             }
             yield return new WaitForSeconds(damageInterval); // Ждем до следующей атаки
         }
     }
+
 }
