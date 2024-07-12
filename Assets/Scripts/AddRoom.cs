@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AddRoom : MonoBehaviour
 {
+    private bool roomActive = false;
+
+
     [Header("Walls")]
     public GameObject[] walls;
     //public Gameobject wallEffect;
@@ -21,7 +24,7 @@ public class AddRoom : MonoBehaviour
 
     private RoomVariants variants;
     private bool spawned;
-    private bool wallsDestroyed;
+    private bool wallsDestroyed=false;
 
     private void Start()
     {
@@ -33,6 +36,7 @@ public class AddRoom : MonoBehaviour
         if (other.CompareTag("Player") && !spawned)
         {
             spawned = true;
+            roomActive = true;
 
             foreach (Transform spawner in enemySpawner)
             {
@@ -68,20 +72,24 @@ public class AddRoom : MonoBehaviour
 
     public void DestroyWalls()
     {
-        foreach (GameObject wall in walls)
+        if (roomActive) // Destroy walls only when roomActive is true
         {
-            if (wall != null && wall.transform.childCount != 0)
+            foreach (GameObject wall in walls)
             {
-                // Instantiate(wallEffect, wall.transform.position, Quaternion.identity); // Uncomment if wallEffect is defined
-                Destroy(wall);
+                if (wall != null && wall.transform.childCount != 0)
+                {
+                    // Instantiate(wallEffect, wall.transform.position, Quaternion.identity); // Uncomment if wallEffect is defined
+                    Destroy(wall);
+                }
             }
-            wallsDestroyed = true; // Consider if you need to reset this based on your game logic
+            wallsDestroyed = true;
         }
     }
 
+
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (wallsDestroyed && other.CompareTag("Wall"))
+        if (wallsDestroyed && other.CompareTag("Door"))
         {
             Destroy(other.gameObject);
         }
