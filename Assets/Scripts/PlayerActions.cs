@@ -18,6 +18,7 @@ public class Shooting : MonoBehaviour
 
     public float moveSpeed = 10f;
     private Rigidbody2D rb; // измените public на private
+    public Health playerHealth;
 
     private Vector2 moveDirection;
 
@@ -94,7 +95,7 @@ public class Shooting : MonoBehaviour
 
     void Move()
     {
-        if (rb != null)
+        if (playerHealth.health > 0 && rb != null)
         {
             rb.velocity = moveDirection * moveSpeed;
         }
