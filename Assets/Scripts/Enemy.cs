@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public float damageInterval = 1.0f; // Интервал между нанесением урона
     private Transform player; // Ссылка на трансформ игрока
     private bool isAttacking = false; // Флаг, указывающий на то, идет ли атака
+    private Health playerHealth;
 
     private AddRoom room; // Ссылка на компонент AddRoom, чтобы управлять списком врагов
 
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
     {
         // Находим объект игрока на сцене
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHealth = player.GetComponent<Health>();
 
         // Получаем ссылку на родительский объект AddRoom
         room = GetComponentInParent<AddRoom>();
@@ -43,7 +45,7 @@ public class Enemy : MonoBehaviour
 
     private void MoveTowardsPlayer()
     {
-        if (player != null)
+        if (player != null && playerHealth.health > 0)
         {
             // Вычисляем направление к игроку
             Vector2 direction = (player.position - transform.position).normalized;
@@ -87,6 +89,11 @@ public class Enemy : MonoBehaviour
                 transform.localScale = theScale;
             }
         }
+         else
+        {
+            animator.SetBool("PlayerDead", true);
+        }
+
     }
 
     public void TakeDamage(int damage)
