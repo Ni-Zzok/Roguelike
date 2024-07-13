@@ -9,11 +9,8 @@ public class Health : MonoBehaviour
     public int maxHealth;
     public GameObject pauseMenu;
 
-    public Animator animator;
-
     void Start()
     {
-        animator = GetComponent<Animator>();
         pauseMenu.SetActive(false);
     }
 
@@ -41,9 +38,7 @@ public class Health : MonoBehaviour
 
         if (health <= 0)
         {
-            animator.SetTrigger("Death");
-            Invoke("StopGame", 2.1f);
-            //StopGame();
+            StopGame();
         }
     }
 
