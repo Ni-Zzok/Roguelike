@@ -37,33 +37,36 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
-        ProcessInputs();
+        if (playerHealth.health > 0)
+        {
+            ProcessInputs();
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            currentFirePoint = firePointUp;
-            currentDirection = Vector2.up;
-            Shoot(currentFirePoint, currentDirection);
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            currentFirePoint = firePointDown;
-            currentDirection = Vector2.down;
-            Shoot(currentFirePoint, currentDirection);
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            currentFirePoint = firePointLeft;
-            currentDirection = Vector2.left;
-            if (facingRight) { Flip(); }
-            Shoot(currentFirePoint, currentDirection);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            currentFirePoint = firePointRight;
-            currentDirection = Vector2.right;
-            if (!facingRight) { Flip(); }
-            Shoot(currentFirePoint, currentDirection);
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                currentFirePoint = firePointUp;
+                currentDirection = Vector2.up;
+                Shoot(currentFirePoint, currentDirection);
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                currentFirePoint = firePointDown;
+                currentDirection = Vector2.down;
+                Shoot(currentFirePoint, currentDirection);
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                currentFirePoint = firePointLeft;
+                currentDirection = Vector2.left;
+                if (facingRight) { Flip(); }
+                Shoot(currentFirePoint, currentDirection);
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                currentFirePoint = firePointRight;
+                currentDirection = Vector2.right;
+                if (!facingRight) { Flip(); }
+                Shoot(currentFirePoint, currentDirection);
+            }
         }
     }
 
@@ -98,6 +101,10 @@ public class Shooting : MonoBehaviour
         if (playerHealth.health > 0 && rb != null)
         {
             rb.velocity = moveDirection * moveSpeed;
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, 0);
         }
     }
 
