@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     private bool isAttacking = false; // ‘лаг, указывающий на то, идет ли атака
     private Health playerHealth;
 
+    
     private AddRoom room; // —сылка на компонент AddRoom, чтобы управл€ть списком врагов
 
     public Animator animator;
@@ -146,4 +147,7 @@ public class Enemy : MonoBehaviour
         theScale.x *= -1;
         transform.localScale = theScale;
     }
+
+   
+
 }
