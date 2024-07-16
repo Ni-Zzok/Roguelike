@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("Dead");
             Destroy(gameObject, 0.4f); // Уничтожаем врага, если его здоровье меньше или равно нулю
             room.enemies.Remove(gameObject); // Удаляем врага из списка текущих врагов в комнате
+            PlayerPrefs.SetInt("EnemyKilled", PlayerPrefs.GetInt("EnemyKilled") + 1); // РЕКОРДЫ
         }
         else
         {
